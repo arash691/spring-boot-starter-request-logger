@@ -1,0 +1,23 @@
+theme: jekyll-theme-cayman
+title: Spring Boot Request Logger Starter
+description: A powerful and flexible Spring Boot starter for comprehensive HTTP request/response logging
+show_downloads: true
+google_analytics:
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: Arash Ariani
+twitter:
+  username: arash_ariani
+  card: summary
+
+# Navigation
+nav:
+  - title: Home
+    url: /
+  - title: Documentation
+    url: /#documentation
+  - title: GitHub
+    url: https://github.com/arash691/spring-boot-starter-request-logger

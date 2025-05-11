@@ -1,0 +1,27 @@
+spring:
+  main:
+    banner-mode: off
+
+request:
+  logging:
+    enabled: true
+    include-headers: true
+    include-parameters: true
+    include-request-body: true
+    include-response-body: true
+    include-timing: true
+    max-body-length: 500
+    exclude-headers:
+      - Authorization
+      - Cookie
+    masking-patterns:
+      - field-name: password
+        pattern: "password\":\"[^\"]*\""
+        replacement: "password\":\"***\""
+      - field-name: token
+        pattern: "token\":\"[^\"]*\""
+        replacement: "token\":\"MASKED-TOKEN\""
+
+logging:
+  level:
+    com.arash.ariani: DEBUG
