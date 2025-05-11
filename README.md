@@ -20,7 +20,7 @@ Add the following dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>com.github.wallex</groupId>
+    <groupId>com.arash.ariani</groupId>
     <artifactId>spring-boot-starter-request-logger</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
