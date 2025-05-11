@@ -12,6 +12,11 @@ public class RequestLoggingProperties {
     private boolean enabled = true;
 
     /**
+     * Whether to enable ANSI color output in console logs
+     */
+    private boolean enableAnsiColor = true;
+
+    /**
      * Whether to include request headers in logs
      */
     private boolean includeHeaders = true;
@@ -62,6 +67,14 @@ public class RequestLoggingProperties {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isEnableAnsiColor() {
+        return enableAnsiColor;
+    }
+
+    public void setEnableAnsiColor(boolean enableAnsiColor) {
+        this.enableAnsiColor = enableAnsiColor;
     }
 
     public boolean isIncludeHeaders() {

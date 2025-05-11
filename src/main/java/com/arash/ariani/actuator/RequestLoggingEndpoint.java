@@ -1,16 +1,17 @@
 package com.arash.ariani.actuator;
 
 import com.arash.ariani.properties.RequestLoggingProperties;
-import org.springframework.boot.actuate.endpoint.annotation.*;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
-@Endpoint(id = "requestLogger")
+@Endpoint(id = "requestlogging")
 public class RequestLoggingEndpoint {
-
     private final RequestLoggingProperties properties;
 
     public RequestLoggingEndpoint(RequestLoggingProperties properties) {
@@ -30,6 +31,7 @@ public class RequestLoggingEndpoint {
         config.put("excludeHeaders", properties.getExcludeHeaders());
         config.put("maskingPatterns", properties.getMaskingPatterns());
         config.put("maskFields", properties.getMaskFields());
+        config.put("enableAnsiColor", properties.isEnableAnsiColor());
         return config;
     }
 

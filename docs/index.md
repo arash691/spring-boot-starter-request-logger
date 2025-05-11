@@ -8,6 +8,8 @@ A powerful and flexible Spring Boot starter for comprehensive HTTP request/respo
   - Headers, parameters, and body content
   - Configurable inclusion/exclusion of components
   - Support for both JSON and XML content formatting
+  - Spring Boot style logging format
+  - ANSI color support for log levels
 
 - 🔐 **Sensitive Data Protection**
   - Pattern-based masking of sensitive information
@@ -106,7 +108,7 @@ public class UserController {
 
 Example log output:
 ```
-Request Details:
+2024-03-21 10:15:30.123 INFO 12345 --- [main] com.example.UserController : Request Details:
 Correlation ID: a7591a00-b601-4c70-b7ab-1b3ae6d460a4
 Method: POST
 URI: /api/users
@@ -114,7 +116,7 @@ Headers: {Content-Type=application/json}
 Parameters: {}
 Body: {"name":"john","email":"john@example.com","password":"***"}
 
-Response Details:
+2024-03-21 10:15:30.456 INFO 12345 --- [main] com.example.UserController : Response Details:
 Correlation ID: a7591a00-b601-4c70-b7ab-1b3ae6d460a4
 Status: 200
 Duration: 42ms
@@ -196,15 +198,15 @@ management:
   endpoints:
     web:
       exposure:
-        include: requestLogger
+        include: requestlogging
   endpoint:
-    requestLogger:
+    requestlogging:
       enabled: true
 ```
 
 Access the endpoint:
-- GET `/actuator/requestLogger` - View current configuration
-- POST `/actuator/requestLogger` - Update configuration
+- GET `/actuator/requestlogging` - View current configuration
+- POST `/actuator/requestlogging` - Update configuration
 
 Example POST request:
 ```json
@@ -242,6 +244,34 @@ public class MetricsService {
 ```
 
 ## Advanced Configuration
+
+### Logging Format and Colors
+
+The default logging format follows Spring Boot's standard format:
+
+```
+TIMESTAMP LEVEL PID --- [THREAD] LOGGER : MESSAGE
+```
+
+For example:
+```
+2024-03-21 10:15:30.123 INFO 12345 --- [main] com.example.Controller : Request received
+```
+
+Enable ANSI colors in console output:
+
+```yaml
+request:
+  logging:
+    enable-ansi-color: true
+```
+
+When ANSI colors are enabled, log levels are colored:
+- ERROR - Red
+- WARN - Yellow
+- INFO - Green
+- DEBUG - Green
+- TRACE - Green
 
 ### Logging Levels
 
@@ -341,4 +371,4 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

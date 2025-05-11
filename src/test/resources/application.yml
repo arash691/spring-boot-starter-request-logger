@@ -10,6 +10,7 @@ request:
     include-request-body: true
     include-response-body: true
     include-timing: true
+    enable-ansi-color: true
     max-body-length: 500
     exclude-headers:
       - Authorization

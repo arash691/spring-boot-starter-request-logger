@@ -5,6 +5,7 @@ A Spring Boot starter for comprehensive HTTP request/response logging with power
 ## Features
 
 - 🔍 Detailed request/response logging
+- 🎨 Spring Boot style logging format with ANSI colors
 - 🔐 Sensitive data masking
 - 🎯 Correlation ID tracking
 - ⚡ Performance timing
@@ -52,6 +53,9 @@ request.logging.include-request-body=true
 request.logging.include-response-body=true
 request.logging.include-timing=true
 
+# Enable/disable ANSI colors in console output
+request.logging.enable-ansi-color=true
+
 # Set maximum body length to log
 request.logging.max-body-length=1000
 
@@ -81,7 +85,7 @@ public class UserController {
 
 Example log output:
 ```
-Request Details:
+2024-03-21 10:15:30.123 INFO 12345 --- [main] com.example.UserController : Request Details:
 Correlation ID: a7591a00-b601-4c70-b7ab-1b3ae6d460a4
 Method: POST
 URI: /api/users
@@ -89,7 +93,7 @@ Headers: {Content-Type=application/json}
 Parameters: {}
 Body: {"name":"john","email":"john@example.com","password":"***"}
 
-Response Details:
+2024-03-21 10:15:30.456 INFO 12345 --- [main] com.example.UserController : Response Details:
 Correlation ID: a7591a00-b601-4c70-b7ab-1b3ae6d460a4
 Status: 200
 Duration: 42ms
@@ -127,13 +131,13 @@ public class UserController {
 Enable the actuator endpoint to view and modify logging configuration at runtime:
 
 ```properties
-management.endpoints.web.exposure.include=requestLogger
-management.endpoint.requestLogger.enabled=true
+management.endpoints.web.exposure.include=requestlogging
+management.endpoint.requestlogging.enabled=true
 ```
 
 Access the endpoint:
-- GET `/actuator/requestLogger` - View current configuration
-- POST `/actuator/requestLogger` - Update configuration
+- GET `/actuator/requestlogging` - View current configuration
+- POST `/actuator/requestlogging` - Update configuration
 
 ### Metrics
 
@@ -193,6 +197,26 @@ public class LoggingConfig {
     }
 }
 ```
+
+### Logging Format
+
+The default logging format follows Spring Boot's standard format:
+
+```
+TIMESTAMP LEVEL PID --- [THREAD] LOGGER : MESSAGE
+```
+
+For example:
+```
+2024-03-21 10:15:30.123 INFO 12345 --- [main] com.example.Controller : Request received
+```
+
+When ANSI colors are enabled (`request.logging.enable-ansi-color=true`), log levels are colored:
+- ERROR - Red
+- WARN - Yellow
+- INFO - Green
+- DEBUG - Green
+- TRACE - Green
 
 ## Spring Boot Version Compatibility
 

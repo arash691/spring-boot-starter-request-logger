@@ -27,8 +27,7 @@ public class LoggingTemplate {
 
     public static class Builder {
         private static final String DEFAULT_REQUEST_TEMPLATE = """
-            Request Details:
-            Correlation ID: {{correlationId}}
+            {{timestamp}} {{level}} {{pid}} --- [{{thread}}] {{logger}} : Request Details:
             Method: {{method}}
             URI: {{uri}}
             Headers: {{headers}}
@@ -37,8 +36,7 @@ public class LoggingTemplate {
             """;
 
         private static final String DEFAULT_RESPONSE_TEMPLATE = """
-            Response Details:
-            Correlation ID: {{correlationId}}
+            {{timestamp}} {{level}} {{pid}} --- [{{thread}}] {{logger}} : Response Details:
             Status: {{status}}
             Duration: {{duration}}ms
             Headers: {{headers}}

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.time.Instant;
 import java.util.Arrays;
 
 public class RequestLoggingInterceptor implements HandlerInterceptor {
@@ -63,7 +64,11 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
 
     private void logRequest(HttpServletRequest request, LogRequest logRequest) {
         Map<String, Object> values = new HashMap<>();
-        values.put("correlationId", request.getAttribute("correlationId"));
+        values.put("timestamp", LoggingUtils.formatTimestamp(Instant.now()));
+        values.put("level", LoggingUtils.colorize("INFO", properties.isEnableAnsiColor()));
+        values.put("pid", System.getProperty("PID", "????"));
+        values.put("thread", Thread.currentThread().getName());
+        values.put("logger", this.getClass().getName());
         values.put("method", request.getMethod());
         values.put("uri", request.getRequestURI());
 
@@ -92,7 +97,12 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
 
     private void logResponse(HttpServletRequest request, HttpServletResponse response, LogRequest logRequest, Exception ex) {
         Map<String, Object> values = new HashMap<>();
-        values.put("correlationId", request.getAttribute("correlationId"));
+        values.put("timestamp", LoggingUtils.formatTimestamp(Instant.now()));
+        String level = ex != null ? "ERROR" : "INFO";
+        values.put("level", LoggingUtils.colorize(level, properties.isEnableAnsiColor()));
+        values.put("pid", System.getProperty("PID", "????"));
+        values.put("thread", Thread.currentThread().getName());
+        values.put("logger", this.getClass().getName());
         values.put("status", response.getStatus() + (ex != null ? " (Error: " + ex.getMessage() + ")" : ""));
 
         boolean shouldIncludeTiming = logRequest != null ? logRequest.includeTiming() : properties.isIncludeTiming();
@@ -113,7 +123,11 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             values.put("body", "-");
         }
 
-        log.info(templates[1].format(values));
+        if (ex != null) {
+            log.error(templates[1].format(values));
+        } else {
+            log.info(templates[1].format(values));
+        }
     }
 
     private String getHeaders(HttpServletRequest request, LogRequest logRequest) {

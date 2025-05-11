@@ -34,7 +34,7 @@ class RequestLoggingEndpointTest {
     @Test
     void shouldGetConfiguration() {
         ResponseEntity<Map> response = restTemplate.getForEntity(
-                "http://localhost:" + port + "/actuator/requestLogger",
+                "http://localhost:" + port + "/actuator/requestlogging",
                 Map.class
         );
 
@@ -54,7 +54,7 @@ class RequestLoggingEndpointTest {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
         ResponseEntity<Map> response = restTemplate.exchange(
-                "http://localhost:" + port + "/actuator/requestLogger",
+                "http://localhost:" + port + "/actuator/requestlogging",
                 HttpMethod.POST,
                 request,
                 Map.class
